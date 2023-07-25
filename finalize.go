@@ -14,7 +14,7 @@ import (
 	"github.com/miekg/dns"
 )
 
-var log = clog.NewWithPlugin("finalize")
+var log = clog.NewWithPlugin(PluginName)
 
 // Rewrite is plugin to rewrite requests internally before being handled.
 type Finalize struct {
@@ -125,7 +125,7 @@ func (s *Finalize) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Ms
 }
 
 // Name implements the Handler interface.
-func (al *Finalize) Name() string { return "finalize" }
+func (al *Finalize) Name() string { return PluginName }
 
 func recordDuration(ctx context.Context, start time.Time) {
 	requestDuration.WithLabelValues(metrics.WithServer(ctx)).

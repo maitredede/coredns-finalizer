@@ -10,13 +10,15 @@ import (
 	"github.com/coredns/coredns/plugin"
 )
 
+const PluginName = "finalize"
+
 // init registers this plugin.
-func init() { plugin.Register("finalize", setup) }
+func init() { plugin.Register(PluginName, setup) }
 
 func setup(c *caddy.Controller) error {
 	finalize, err := parse(c)
 	if err != nil {
-		return plugin.Error("finalize", err)
+		return plugin.Error(PluginName, err)
 	}
 	// Add the Plugin to CoreDNS, so Servers can use it in their plugin chain.
 	dnsserver.GetConfig(c).AddPlugin(func(next plugin.Handler) plugin.Handler {
